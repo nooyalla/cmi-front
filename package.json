@@ -1,0 +1,28 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "img-color-extractor": "^1.0.7",
+    "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.10.2",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.0.5",
+    "react-input-range": "^1.3.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "0.9.x",
+    "request": "^2.88.0",
+    "semver": "6.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "copy": "mv -f /Users/giladgreen/dev/temp/cmi/build/static/js/* /Users/giladgreen/dev/temp/cmi/public && mv -f /Users/giladgreen/dev/temp/cmi/build/static/css/* /Users/giladgreen/dev/temp/cmi/public",
+    "deploy": "npm version patch && npm run build build && node rename && npm run copy && npm run commit-and-push",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "commit-and-push": "git commit -am 'commit' && git push"
+  }
+}
