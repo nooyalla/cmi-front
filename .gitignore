@@ -1,6 +1,6 @@
 #IDE
 .idea*
-
+public/.DS_Store
 
 # Logs
 logs
