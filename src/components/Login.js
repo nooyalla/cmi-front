@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 import login from '../actions/fake/login';
 //import login from '../actions/login';
 import Loader from "../containers/Loading";
-import { version } from '../../package';
+import { version } from '../../package.json';
 const ONE_DAY = 1000 * 60 * 60 * 24;
 class Login extends Component {
 
@@ -21,6 +21,7 @@ class Login extends Component {
 
     performLogin = async (provider, token, showError = true) => {
         try{
+            console.log(provider, token);
             const result = await login(provider, token);
             const authData = localStorage.getItem('authData');
             const issueDate  = authData ? JSON.parse(authData).issueDate : new Date();
