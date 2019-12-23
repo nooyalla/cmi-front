@@ -1,11 +1,17 @@
 
 import React from 'react';
 import SearchAppBar from './components/SearchAppBar';
+import { Container } from '@material-ui/core';
+
+
+
 
 const App = () =>
-        <div>
-            <SearchAppBar />
+    <div>
+        <SearchAppBar />
+        <Container maxWidth="sm">
             App
-        </div>
+        </Container>
+    </div>
 
 export default App;
