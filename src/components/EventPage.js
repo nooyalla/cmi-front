@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+
+
 const SECOND = 1000;
 const MINUTE = 60;
 const HOUR = 60 * MINUTE;
@@ -63,8 +67,7 @@ class EventPage extends Component {
     render() {
         const header = this.getHeader();
         const { event, user } = this.props;
-        console.log(' event.participants', event.participants);
-        console.log(' user', user);
+
         const attending =  event.participants.some(participant => participant.id === user.id);
 
         const eventDay = days[event.startDate.getDay()];
@@ -135,10 +138,10 @@ class EventPage extends Component {
 
                 <div id="event-details-div">
                     <div id="event-date-text">
-                        {eventDay}, {eventDate}
+                       <DateRangeIcon/> {eventDay}, {eventDate}
                     </div>
                     <div id="event-location-text">
-                        {event.location}
+                       <LocationOnIcon/> {event.location}
                     </div>
 
                     { !this.lastConfirmationDateOver ? (<button className="approve-button" onClick={()=>this.attendOrUnattend(attending, event.id)} >{attending ? "I'M OUT": "I'M IN"}</button>) : (

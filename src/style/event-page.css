@@ -35,14 +35,16 @@
     padding-top: 9vh;
     padding-left: 2vh;
     text-align: center;
+    color: white;
+    text-shadow: 2px 2px black;
 }
 .event-timer-item{
     font-weight: bold;
     padding-right: 3vw;
     padding-left: 3vw;
-    margin-left: 5px;
-    margin-right: 5px;
-    background-color: #ffffff33;
+    margin-left: 3px;
+    margin-right: 4px;
+    background-color: #ffffff66;
 }
 .event-timer-number{
     font-size: 2.7em;
