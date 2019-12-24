@@ -6,6 +6,12 @@
     text-align: left;
     font-size: 1em;
 }
+#event-link{
+    color: #1b1e21;
+    font-size: 2em;
+    padding-top: 5vw;
+    padding-left: 25vw;
+}
 .white{
     color: white;
 }

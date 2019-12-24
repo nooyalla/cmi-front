@@ -206,9 +206,14 @@ class NewEventForm extends Component {
                         <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
                     </div>
                     {this.state.update ? (<div className="row">
-                        <button className="delete-button" onClick={() => this.props.delete(this.state.event.id)} disabled={!forLegal}>DELETE</button>
+                        <button className="delete-button" onClick={() => this.props.share(this.state.event.id)} >DELETE</button>
 
                     </div>) : <div />}
+                    {this.state.update ? (<div id="event-link">
+                        <a href={`https://im-in.herokuapp.com?eventId=${this.state.event.id}`} > open event </a>
+                    </div>) : <div />}
+
+
 
                 </div>
             </div>

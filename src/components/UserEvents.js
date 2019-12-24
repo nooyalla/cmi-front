@@ -18,60 +18,60 @@ class UserEvents extends Component {
         return `backgroundImage${this.imageIndex}.jpg`;
     }
     getUserEventsDiv=()=>{
-        const events = this.props.events || [];
+      //  const events = this.props.events || [];
 
-        // const events = [{
-        //     id:'1',
-        //     title:'poker night',
-        //     description:'poker night',
-        //     location:'somewhere',
-        //     imageUrl:null,
-        //     startDate: new Date(),
-        //     endDate: new Date(),
-        //     minParticipants: 3,
-        //     maxParticipants: 30,
-        //     additionalItems:[],
-        //     participants: [{
-        //         id: 1,
-        //         imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAyuOJTvxfYVFwxKOd-h58A8Oxm1EVSf8OjpkSC3uk'
-        //     }, {
-        //         id: 2,
-        //         imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mA99CsCawUbTeZXQQuDTdQBr3NLRHiHKAwWdT3ifQ'
-        //     }, {
-        //         id: 3,
-        //         imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
-        //     } ,{
-        //         id: 4,
-        //         imageUrl: 'https://lh5.googleusercontent.com/-1gIcswW4rwM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reqOCMS5qJhFQJCA1rGgxaCp1LB4w/photo.jpg'
-        //     }, {
-        //         id: 5,
-        //         imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
-        //     } ,{
-        //         id: 6,
-        //         imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
-        //     }]
-        // }, {
-        //     id:'2',
-        //     title:'soccer!',
-        //     description:'poker night',
-        //     location:'somewhere',
-        //     imageUrl:null,
-        //     startDate: new Date(),
-        //     endDate: new Date(),
-        //     minParticipants: 3,
-        //     maxParticipants: 30,
-        //     additionalItems:[],
-        //     participants: [{
-        //         id: 1,
-        //         imageUrl: 'https://lh6.googleusercontent.com/-ytRjEMsP4z4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3relWuDYAvQHC7SzvBmNhAdHzjGNTQ/photo.jpg'
-        //     }, {
-        //         id: 2,
-        //         imageUrl: 'https://lh5.googleusercontent.com/-1gIcswW4rwM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reqOCMS5qJhFQJCA1rGgxaCp1LB4w/photo.jpg'
-        //     }, {
-        //         id: 3,
-        //         imageUrl: 'https://lh3.googleusercontent.com/-UT26zjWE2b4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdHThf6cKQFU8uEkvq-oLTj5diJYg/photo.jpg'
-        //     }]
-        // }];
+        const events = [{
+            id:'1',
+            title:'poker night',
+            description:'poker night',
+            location:'somewhere',
+            imageUrl:null,
+            startDate: new Date(),
+            endDate: new Date(),
+            minParticipants: 3,
+            maxParticipants: 30,
+            additionalItems:[],
+            participants: [{
+                id: 1,
+                imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAyuOJTvxfYVFwxKOd-h58A8Oxm1EVSf8OjpkSC3uk'
+            }, {
+                id: 2,
+                imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mA99CsCawUbTeZXQQuDTdQBr3NLRHiHKAwWdT3ifQ'
+            }, {
+                id: 3,
+                imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+            } ,{
+                id: 4,
+                imageUrl: 'https://lh5.googleusercontent.com/-1gIcswW4rwM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reqOCMS5qJhFQJCA1rGgxaCp1LB4w/photo.jpg'
+            }, {
+                id: 5,
+                imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+            } ,{
+                id: 6,
+                imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+            }]
+        }, {
+            id:'2',
+            title:'soccer!',
+            description:'poker night',
+            location:'somewhere',
+            imageUrl:null,
+            startDate: new Date(),
+            endDate: new Date(),
+            minParticipants: 3,
+            maxParticipants: 30,
+            additionalItems:[],
+            participants: [{
+                id: 1,
+                imageUrl: 'https://lh6.googleusercontent.com/-ytRjEMsP4z4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3relWuDYAvQHC7SzvBmNhAdHzjGNTQ/photo.jpg'
+            }, {
+                id: 2,
+                imageUrl: 'https://lh5.googleusercontent.com/-1gIcswW4rwM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reqOCMS5qJhFQJCA1rGgxaCp1LB4w/photo.jpg'
+            }, {
+                id: 3,
+                imageUrl: 'https://lh3.googleusercontent.com/-UT26zjWE2b4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdHThf6cKQFU8uEkvq-oLTj5diJYg/photo.jpg'
+            }]
+        }];
 
 
         const eventsItems = events.map(event => {

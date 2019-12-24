@@ -126,6 +126,8 @@ class App extends Component {
                 setupEventDates(newEvent);
                 const events = [newEvent, ...this.state.events];
                 this.setState({ loading: false, events, showEventPage: newEvent});
+                window.location.replace(`https://im-in.herokuapp.com?eventId=${newEvent.id}`);
+                window.location.href = `https://im-in.herokuapp.com?eventId=${newEvent.id}`;
 
             } catch (error) {
                 this.setState({ loading: false, error});
@@ -199,6 +201,7 @@ class App extends Component {
         },0)
 
     };
+
     delete = (eventId)=>{
         console.log('app delete, event:', eventId)
         this.setState({ showCreationForm: false, error:null, showEventEditForm:null, loading: true});
@@ -228,9 +231,9 @@ class App extends Component {
         if (loading){
             return  <Loading/>;
         }
-        if (!isAuthenticated){
-            return  <Login onLogin={this.onLogin} />;
-        }
+        // if (!isAuthenticated){
+        //     return  <Login onLogin={this.onLogin} />;
+        // }
 
         if (showEventPage){
             return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user || {}} unattend={this.unattend} attend={this.attend}/>
