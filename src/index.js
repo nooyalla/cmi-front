@@ -7,7 +7,8 @@ import './style/loader.css';
 import './style/index.css';
 import './style/login.css';
 import './style/create-event-form.css';
-console.log('before all')
+import './style/event-page.css';
+
 ReactDOM.render(
   <App />,
   document.getElementById('root')

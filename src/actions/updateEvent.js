@@ -3,11 +3,11 @@ import URL_PREFIX from '../url';
 
 import request from 'request';
 
-async function updateEvent(eventId, event, provider, token){
+async function updateEvent(event, provider, token){
     return new Promise((resolve,reject)=>{
         const options = {
             method:'PATCH',
-            url: `${URL_PREFIX}/events/${eventId}`,
+            url: `${URL_PREFIX}/events/${event.id}`,
             body:JSON.stringify(event),
             headers:{
                 provider: provider,

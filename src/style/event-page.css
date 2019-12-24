@@ -1,0 +1,14 @@
+#event-page{
+    background-color: white;
+    z-index: 100;
+
+    text-align: left;
+    font-size: 1em;
+    top:0;
+    left:0;
+
+}
+#event-image-title-and-timer{
+    position: absolute;
+    margin-top: 10vh;
+}

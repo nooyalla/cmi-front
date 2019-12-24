@@ -1,29 +1,98 @@
 
 #create-event-form {
-    background-color: #1c3168;
+    background-color: white;
     z-index: 100;
-    color: white;
+    color: #5a6268;
     text-align: left;
     font-size: 1em;
 }
-.progress{
-    position: absolute;
-    top:2vh;
-    left: 2vw;
-
+.white{
+    color: white;
 }
-.new-event-page-button{
-    border-color: black;
-    padding: 5px;
-    border-radius: 5px;
+.top-margin{
+    margin-top: 50px;
+}
+.publish-button{
+    background: black;
+    color: white;
+    width: 80vw;
+    margin-left: 8vw;
+    height: 60px;
+    border-radius: 20px;
+}
+.delete-button{
+    margin-top: 10px;
+    background: black;
+    color: white;
+    width: 80vw;
+    margin-left: 8vw;
+    height: 60px;
+    border-radius: 20px;
+}
+.publish-button:disabled{
+    background: #AAAAAA;
+    color: #AAAAAA;
+    border-color: #AAAAAA;
+    text-shadow: 0px 0px 5px #CCDDCC;
+}
+
+#create-event-form-wrapper{
+    padding-top: 10vh;
+    padding-left: 8vw;
+}
+.new-event-form-item-label{
+    font-size: 1em;
+    color: #5a6268;
+}
+.formTextInput-full-width{
+    width: 88vw;
     font-size: 1.2em;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding: 5px;
-    border-radius: 5px;
-    margin-left: 10px;
-
+    margin-bottom: 5vh;
+    border: none;
+    border-bottom: 1px solid #5a6268;
 }
+
+.formDateInput{
+    width: 28vw;
+    font-size: 0.8em;
+    margin-bottom: 5vh;
+    border: none;
+    border-bottom: 1px solid #5a6268;
+}
+.datePicker{
+    font-size: 0.8em;
+}
+.formNumberInput-small-width{
+    font-size: 1.2em;
+
+    border: none;
+    border-bottom: 1px solid #5a6268;
+    width: 17vw;
+    padding-left: 6vw;
+}
+.formNumberInput-full-width{
+    font-size: 1.2em;
+    border: none;
+    border-bottom: 1px solid #5a6268;
+    width: 89vw;
+    padding-left: 6vw;
+}
+.formNumberInput-full-width::before {
+    content: " - Remember this";
+}
+.hours-text{
+    color: #5a6268;
+    font-size: 0.7em;
+    padding-left: 18px;
+}
+.formNumberInput-half-width{
+    font-size: 1.2em;
+    margin-bottom: 5vh;
+    border: none;
+    border-bottom: 1px solid #5a6268;
+    width: 35vw;
+}
+
 #newEventDescription{
     height: 200px;
 }
@@ -42,12 +111,7 @@
     padding-bottom: 20px;
 
 }
-.formTextInput{
-    width: 100%;
-    font-size: 2.5em;
-    padding-left: 15px;
-    margin-bottom: 5vh;
-}
+
 .create-event-step{
     padding-top: 3vw;
     padding-left: 10vw;
@@ -87,19 +151,7 @@
     width: 100px;
 }
 
-.next-step-button:disabled{
 
-    background: lightsteelblue;
-
-    color: grey;
-
-}
-.datePicker{
-    background: white;
-    margin-top: 10px;
-    height: 40px;
-
-}
 .eventImage{
     width: 200px;
     height: 300px;
@@ -107,56 +159,22 @@
 .selectedEventImage{
     border: 3px solid yellow;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #AAAAAA;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #AAAAAA;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #AAAAAA;
+}
+
 
 @media screen and (max-width: 800px) {
 
-    .formMainPageHeader{
-        font-size: 1.33em;
-        font-weight: bold;
-        text-decoration: underline;
-        padding-left: 2vw;
-        padding-bottom: 3vh;
-    }
-    .formInputLabel{
-        font-size: 1.7em;
-        padding-top: 10px;
-    }
-    .formTextInput{
-        width: 90%;
-        font-size: 2em;
-        padding-left: 10px;
-        margin-bottom: 2vh;
-    }
-    .create-event-step{
-        padding-top: 18vw;
-        padding-left: 5vw;
-    }
-    #newEventDescription{
-        height: 150px;
-    }
-    .formMandetoryExplanation{
-        top:74vh;
-        left: 7vw;
-        font-size: 1.9em;
-    }
-    .next-step-button{
-        top:85vh;
-        right: 10vw;
-        padding: 5px;
-        width: 100px;
-    }
 
-    .prev-step-button{
-        top:85vh;
-        left: 10vw;
-        padding: 5px;
-    }
-
-    .datePicker{
-        background: white;
-        margin-top: 10px;
-        height: 40px;
-
-    }
 
 }

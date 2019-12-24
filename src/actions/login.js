@@ -29,9 +29,9 @@ async function login(provider, token){
             if (response && response.headers && response.headers['x-user-context']){
                 const userContextString = response.headers['x-user-context'];
                 const userContext = JSON.parse(decodeURI(userContextString));
-                const groups= JSON.parse(body).results;
-
-                return resolve({groups, userContext, provider, token});
+                const events= JSON.parse(body).results;
+                console.log('got events:',events);
+                return resolve({events, userContext, provider, token});
             } else{
                 console.error('request cb no header');
 
