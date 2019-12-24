@@ -72,7 +72,6 @@ class NewEventForm extends Component {
     }
 
     publishOrUpdate = () => {
-        debugger
         const endDate = addHours(this.state.event.startDate, this.state.duration);
         const lastConfirmationDate = addHours((new Date()), this.state.timer);
         const serializedStartDate = this.getDateByDateAndTime(
@@ -83,7 +82,7 @@ class NewEventForm extends Component {
 
         const event = {
             title: this.state.event.title,
-            description: '',
+            description: this.state.event.description,
             location: this.state.event.location,
             startDate: serializedStartDate,
             endDate,
@@ -119,6 +118,12 @@ class NewEventForm extends Component {
                     </div>
                     <div className="row">
                         <input type="text" placeholder="Enter event name" id="newEventTitle" className="formTextInput-full-width" value={this.state.event.title} onChange={(e) => this.handleEventItemChange('title', e.target.value)} />
+                    </div>
+                    <div className="row">
+                        <span className="new-event-form-item-label">Description</span>
+                    </div>
+                    <div className="row">
+                        <input type="text" placeholder="Enter description" id="newEventTitle" className="formTextInput-full-width" value={this.state.event.description} onChange={(e) => this.handleEventItemChange('description', e.target.value)} />
                     </div>
                     <div className="row">
                         <div className="col-xs-5">
