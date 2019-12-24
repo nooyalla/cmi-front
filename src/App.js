@@ -9,7 +9,7 @@ const event1 = {
     title: "Soccer",
     description: null,
     location: "somewhere",
-    imageUrl: null,
+    imageUrl: 'https://imcpokerdotco.files.wordpress.com/2014/07/ujkuj.jpg',
     startDate: "2019-11-26T07:47:12.796Z",
     endDate: null,
     lastConfirmationDate: "2019-10-26T05:47:12.796Z",

@@ -20,7 +20,7 @@ export default ({events}) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        {events.map(e=><EventCard key={e.idÍ} title={e.title} />)}
+        {events.map(e=><EventCard key={e.id} title={e.title} imageUrl={e.imageUrl}/>)}
       </Grid>
     </div>
   );
