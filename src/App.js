@@ -126,6 +126,8 @@ class App extends Component {
                 setupEventDates(newEvent);
                 const events = [newEvent, ...this.state.events];
                 this.setState({ loading: false, events, showEventPage: newEvent});
+                window.location.replace(`https://im-in.herokuapp.com?eventId=${newEvent.id}`);
+                window.location.href = `https://im-in.herokuapp.com?eventId=${newEvent.id}`;
 
             } catch (error) {
                 this.setState({ loading: false, error});

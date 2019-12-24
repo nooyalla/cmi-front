@@ -45,7 +45,7 @@ class NewEventForm extends Component {
 
     getHeader = ()=>{
         return  <div id="app-header">
-            <span id="app-header-text">IMIN</span>
+            <span id="app-header-text" onClick={()=>{ window.location.href = 'https://im-in.herokuapp.com';}}>IMIN</span>
         </div>
     }
 
