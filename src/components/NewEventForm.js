@@ -34,7 +34,7 @@ class NewEventForm extends Component {
 
         };
 
-        event.additionalItems = props.event  && props.event.additionalItems && Array.isArray(props.event.additionalItems) && props.event.additionalItems.length>0 ? props.event.additionalItems.join(',') : '';
+       // event.additionalItems = props.event  && props.event.additionalItems && Array.isArray(props.event.additionalItems) && props.event.additionalItems.length>0 ? props.event.additionalItems.join(',') : '';
         const duration = props.event && props.event.endDate ?  Math.floor((props.event.endDate.getTime() - props.event.startDate.getTime())/(1000*60*60)) : 4;
         const startDateTime = props.event ? props.event.startDate : new Date();
         this.state = {
@@ -62,12 +62,12 @@ class NewEventForm extends Component {
         return <div id="app-header">
             <span id="app-header-text">IMIN</span>
         </div>
-    }
+    };
 
 
     getDateByDateAndTime = (date, hours, minutes) => {
         return new Date(`${date} ${hours}:${minutes}:00`);
-    }
+    };
 
     publishOrUpdate = () => {
         const endDate = addHours(this.state.event.startDate, this.state.duration);
@@ -103,7 +103,10 @@ class NewEventForm extends Component {
     render() {
         const header = this.getHeader();
 
-        const forLegal = this.state.event.title.length > 0 && this.state.event.location.length > 0 && this.state.event.startDate && this.state.event.minParticipants <= this.state.event.maxParticipants;
+        const forLegal = this.state.event.title.length > 0 &&
+                         this.state.event.location.length > 0 &&
+                         this.state.event.startDate &&
+                         this.state.event.minParticipants <= this.state.event.maxParticipants;
 
         return (
             <div id="create-event-form container">
