@@ -93,7 +93,8 @@ class NewEventForm extends Component {
             additionalItems: null
         };
 
-        if (this.state.update) {
+        if (this.state.update){
+            event.id = this.state.event.id;
             console.log('form update, event:', event);
             this.props.update(event);
         } else {
@@ -192,7 +193,7 @@ class NewEventForm extends Component {
                         </MuiPickersUtilsProvider>
 
                     </div>
-                    <div className="row">
+                    {!this.state.update && <div className="row">
                         <TextField
                             id="standard-number"
                             label="Timer"
@@ -200,7 +201,7 @@ class NewEventForm extends Component {
                             value={this.state.timer}
                             onChange={(e) => this.setState({ timer: e.target.value })}
                         />
-                    </div>
+                    </div>}
                     <div className="row top-margin">
                         <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
                     </div>
