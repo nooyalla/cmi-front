@@ -1,17 +1,69 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  background-color: #1c3168;
+  background-color: white;
   color: white;
   font-size: 1em;
 }
+#app-header{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100vw;
+  height: 10vh;
+  background: black;
+  color: white;
+  font-size: 4em;
+}
+#app-header-text{
+  padding-left: 8vw;
+}
 .MainSection {
+  margin-top: 7vh;
   padding-top: 10px;
   padding-left: 40px;
 
 }
-.events-header{
-  font-size: 1.5em;
+
+.event-item-div{
+  -webkit-box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+  -moz-box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+  box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+  border-radius: 5px;
+  width: 40vw;
+  height: 40vw;
+  margin: 2.9vw;
+  cursor: pointer;
+
+}
+.participantsImagesDiv{
+
+}
+.participantImage{
+  position: relative;
+  width: 10vw;
+  height: 10vw;
+  border-radius: 50%;
+  top:5px;
+}
+.participantImage1{
+  left:5px;
+}
+.participantImage2{
+  left:-8px;
+}
+.participantImage3{
+  left:-17px;
+}
+.participantImage4{
+  left:-28px;
+}
+
+.plus-sign{
+  color: #666666;
+  font-size: 10em;
+  padding-top: 12vw;
+  padding-left: 17vw;
 }
 button{
   border-color: black;
@@ -19,38 +71,71 @@ button{
   border-radius: 5px;
   font-size: 1.2em;
 }
-.logout{
-  font-size: 1.2em;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding: 5px;
-  color: white;
-  border-radius: 5px;
-  margin-left: 10px;
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  background: #a95555;
 
-}
-.create-event{
-  color: #1c3168;
-  background: white;
-  margin-bottom: 20px;
 
-}
-.event-item{
-  border: 3px solid white;
-  padding: 15px;
-  margin-top:50px;
-}
-.paricipentImage{
-  max-height: 50px;
-}
 @media only screen and (max-width: 480px) {
+
+  #app-header{
+    width: 100vw;
+    height: 7vh;
+    font-size: 2em;
+  }
+  #app-header-text{
+    padding-left: 10vw;
+  }
   .MainSection {
     padding-left: 16px;
 
+  }
+  .events-header{
+    font-size: 1.5em;
+  }
+  #user-events{
+
+  }
+  .event-item-div{
+    -webkit-box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+    -moz-box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+    box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
+    border-radius: 5px;
+    width: 40vw;
+    height: 40vw;
+    margin: 2.9vw;
+
+
+  }
+  .participantsImagesDiv{
+
+  }
+  .participantImage{
+    width: 10vw;
+    height: 10vw;
+    top:5px;
+  }
+  .participantImage1{
+    left:5px;
+  }
+  .participantImage2{
+    left:-8px;
+  }
+  .participantImage3{
+    left:-17px;
+  }
+  .participantImage4{
+    left:-28px;
+  }
+
+  .plus-sign{
+
+    font-size: 4em;
+    padding-top: 20px;
+    padding-left: 56px;
+  }
+  button{
+
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1.2em;
   }
 
 

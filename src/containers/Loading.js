@@ -5,7 +5,12 @@ export default class Loader extends Component {
     render() {
         return  (
             <div id="loader">
-                <img id="loaderImage"  src="loader.png"/>
+                <div id="loader-app-name"><b>
+                    IM<span className="loading-name-space">_</span>IN
+                </b></div>
+                <img id="loaderImage"  src="loading.gif"/>
+
+                <div id="please-wait">please wait</div>
             </div>
         );
     }

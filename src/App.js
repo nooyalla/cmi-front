@@ -1,10 +1,18 @@
 
 import React, { Component } from 'react';
+import createEvent from './actions/createEvent';
 
 import Login from './components/Login';
 import NewEventForm from './components/NewEventForm';
 
 import Loading from './containers/Loading';
+import UserEvents from "./components/UserEvents";
+
+Date.prototype.addHours = function(h) {
+    const newDate = new Date(this);
+    newDate.setTime(this.getTime() + (h*60*60*1000));
+    return newDate;
+}
 
 String.prototype.datePickerToDate = function() {
     const stringValue =  this;//2017-11-23
@@ -23,15 +31,9 @@ class App extends Component {
     constructor() {
         super();
         console.log('App constructor');
-       // const notFirst = localStorage.getItem('notFirst');
-       // const loading = !notFirst;
-        this.state = { showCreationForm: true, loading: false, isAuthenticated: false, user: null, events:[], provider:'', error:null, token:null};
-        // if (!notFirst){
-        //     localStorage.setItem('notFirst', 'true');
-        //     setTimeout(()=>{
-        //         this.setState({loading: false});
-        //     },2700)
-        // }
+
+        this.state = { showCreationForm: false, showEventEditForm:null, loading: false, isAuthenticated: false, user: null, events:null, provider:'', error:null, token:null};
+
     }
 
     logout = () => {
@@ -44,8 +46,12 @@ class App extends Component {
         this.setState({ showCreationForm: true, error:null})
     };
 
+    editEventForm = (event) => {
+        this.setState({ showEventEditForm: event})
+    };
+
     onCancel = () => {
-        this.setState({ showCreationForm: false, error:null})
+        this.setState({ showCreationForm: false, error:null, showEventEditForm:null})
     };
 
     onFailure = (error) => {
@@ -61,56 +67,56 @@ class App extends Component {
         this.setState({user: userContext, events, loading: false, isAuthenticated: true, error:null, provider, token})
     };
 
+    getHeader = ()=>{
+        return  <div id="app-header">
+            <span id="app-header-text">IMIN</span>
+        </div>
+    }
+
+    publish = (event)=>{
+        console.log('app publish, event:', event)
+        this.setState({ showCreationForm: false, error:null, showEventEditForm:null, loading: true});
+        setTimeout(async ()=>{
+            try {
+                const newEvent = await createEvent(event, this.state.provider, this.state.token);
+                const events = [newEvent, ...this.state.events];
+                this.setState({ loading: false, events});
+
+            } catch (error) {
+                this.setState({ loading: false, error});
+            }
+        },0)
+
+    };
+
     render() {
-        const {loading, isAuthenticated, events, showCreationForm}  = this.state;
+        const {loading, isAuthenticated, events, showCreationForm, showEventEditForm}  = this.state;
         console.log('main render loading:',loading,'isAuthenticated', isAuthenticated, 'events', events);
         if (loading){
             return  <Loading/>;
         }
-        if (!isAuthenticated){
-            return  <Login onLogin={this.onLogin} />;
-        }
+        // if (!isAuthenticated){
+        //     return  <Login onLogin={this.onLogin} />;
+        // }
 
+        if (showEventEditForm){
+            console.log('showEventEditForm',showEventEditForm)
+            //TODO
+        }
         if (showCreationForm){
-            return  <NewEventForm onCancel={this.onCancel} />;
+            return  <NewEventForm onCancel={this.onCancel} publish={this.publish} />;
         }
 
-        const eventsDiv = events.length === 0 ? <div className="events-header"> No events yet </div> : (
-            <div >
-                <div className="events-header"><b><u>{events.length} Event{events.length >1 ? 's':''}:</u></b>  </div>
-                {events.map(event=>{
-
-                    const style = {
-                        backgroundImage: `url(${event.image})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        width: "100%",
-                        height: "100%"
-                    };
-                    return <div key={event.id} className="event-item" style={style}>
-                        <h1><b><u>{event.title}</u></b></h1>
-                        <h2>{event.description}</h2>
-                        <h3> {event.paricipents.length} confirmed paricipent{event.paricipents.length === 1 ? '' :'s'}</h3>
-
-                    </div>
-                })}
-            </div>
-
-        );
-
+        const header = this.getHeader();
         return (
-            <div className="App">
+            <div className="App container">
                 <div className="errorSection">
                     {this.state.error}
                 </div>
+                {header}
                 <div className="MainSection">
-                    <div >
-                        <button className="button logout" onClick={this.logout}> Log out </button>
-                    </div>
-                    <div>
-                        <button className="button create-event" onClick={this.createEvent}> Create New Event </button>
-                        {eventsDiv}
-                    </div>
+
+                    <UserEvents createEvent={this.createEvent} events={this.state.events}/>
 
                 </div>
 

@@ -1,12 +1,14 @@
-import { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } from '../config';
+
 import React, { Component } from 'react';
 import FacebookLogin from  'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
-//import login from '../actions/fake/login';
+
 import login from '../actions/login';
 import Loader from "../containers/Loading";
 import { version } from '../../package.json';
 const ONE_DAY = 1000 * 60 * 60 * 24;
+const GOOGLE_CLIENT_ID = "323527955387-rpt6jpjmdeputfkggi5v5gf5cl99ontb.apps.googleusercontent.com";
+const FACEBOOK_APP_ID = "568337437281618";
 class Login extends Component {
 
     constructor() {
@@ -39,6 +41,7 @@ class Login extends Component {
 
     facebookResponse = (response) => {
         if (response.accessToken){
+            console.log('token:',response.accessToken)
             this.performLogin('facebook', response.accessToken, true);
         }else{
             this.onFailure('login failed')
@@ -72,7 +75,7 @@ class Login extends Component {
             onSuccess={this.googleResponse}
             onFailure={this.onFailure}
             render={renderProps => (
-                <button id="google-login-button"  className="login-button"  onClick={renderProps.onClick}>Sign in with Google</button>
+                <div className="login-button" onClick={renderProps.onClick}> LOGIN WITH GOOGLE</div>
             )}
         />);
 
@@ -82,32 +85,21 @@ class Login extends Component {
             fields="name,email,picture"
             callback={this.facebookResponse}
             render={renderProps => (
-                <button id="facebook-login-button" className="login-button" onClick={renderProps.onClick}>Sign in with Facebook</button>
+                <div className="login-button" onClick={renderProps.onClick}> LOGIN WITH FACEBOOK</div>
             )}
         />);
 
         return (
             <div id="login-page">
-                <div id="login-header-div">
-                    <div id="login-header">
-                        CMI
-                    </div>
-                </div>
-                <div id="login-text">
-                   LOG IN TO <b> CMI</b>
-                </div>
-                <div>
-                    <div id="space-before-login-buttons">
-                    </div>
-                    <div>
-                        {facebook}
-                    </div>
-                    <div id="space-between-login-buttons">
-                    </div>
-                    <div>
-                        {google}
-                    </div>
-                </div>
+
+                <img id="rect-img" src="rect.png"/>
+                <img id="hand-img" src="hand.png"/>
+                <div id="login-space1"/>
+                <span className="login-app-name">IM</span> <span className="login-app-name-space"> _</span><span className="login-app-name">IN</span>
+                <div id="login-space2"/>
+                {facebook}
+                {google}
+
                 <div id="loginErrorSection">
                     {this.state.error ? this.state.error : ''}
                 </div>
