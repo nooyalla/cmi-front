@@ -96,8 +96,8 @@ class Login extends Component {
         return (
             <div id="login-page">
 
-                <img id="rect-img" src="rect.png"/>
-                <img id="hand-img" src="hand.png"/>
+                <img id="rect-img" src="rect.png" alt='rect'/>
+                <img id="hand-img" src="hand.png" alt='hand'/>
                 <div id="login-space1"/>
                 <span className="login-app-name">IM</span> <span className="login-app-name-space"> _</span><span className="login-app-name">IN</span>
                 <div id="login-space2"/>

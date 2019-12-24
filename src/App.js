@@ -5,7 +5,7 @@ import updateEvent from './actions/updateEvent';
 import deleteEvent from './actions/deleteEvent';
 import getEvent from './actions/getEvent';
 
-import Login from './components/Login';
+//import Login from './components/Login';
 import NewEventForm from './components/NewEventForm';
 import EventPage from './components/EventPage';
 
@@ -146,9 +146,9 @@ class App extends Component {
         if (loading){
             return  <Loading/>;
         }
-        if (!isAuthenticated){
+        /* if (!isAuthenticated){
             return  <Login onLogin={this.onLogin} />;
-        }
+        } */
 
         if (showEventPage){
             return <EventPage goHome={this.logout} event={showEventPage}/>

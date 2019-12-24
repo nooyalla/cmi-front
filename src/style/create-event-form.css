@@ -38,14 +38,15 @@
 
 #create-event-form-wrapper{
     padding-top: 10vh;
-    padding-left: 8vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
 .new-event-form-item-label{
     font-size: 1em;
     color: #5a6268;
 }
 .formTextInput-full-width{
-    width: 88vw;
+    width: 100%;
     font-size: 1.2em;
     margin-bottom: 5vh;
     border: none;
