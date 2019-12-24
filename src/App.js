@@ -95,9 +95,9 @@ class App extends Component {
         if (loading){
             return  <Loading/>;
         }
-        // if (!isAuthenticated){
-        //     return  <Login onLogin={this.onLogin} />;
-        // }
+        if (!isAuthenticated){
+            return  <Login onLogin={this.onLogin} />;
+        }
 
         if (showEventEditForm){
             console.log('showEventEditForm',showEventEditForm)
