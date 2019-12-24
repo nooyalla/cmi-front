@@ -15,7 +15,12 @@ import Loading from './containers/Loading';
 import UserEvents from "./components/UserEvents";
 
 
-
+function setupEventDates(event){
+    event.startDate = new Date(event.startDate);
+    event.endDate = new Date(event.endDate);
+    event.lastConfirmationDate = new Date(event.lastConfirmationDate);
+    return event;
+}
 class App extends Component {
 
     constructor() {
@@ -96,9 +101,7 @@ class App extends Component {
 
             setTimeout(async ()=>{
                 const event = await getEvent(eventId,  provider, token);
-                event.startDate = new Date(event.startDate);
-                event.endDate = new Date(event.endDate);
-                event.lastConfirmationDate = new Date(event.lastConfirmationDate);
+                setupEventDates(event)
                 this.setState({loading: false, showEventPage: event});
             },0)
         } else{
@@ -120,6 +123,7 @@ class App extends Component {
         setTimeout(async ()=>{
             try {
                 const newEvent = await createEvent(event, this.state.provider, this.state.token);
+                setupEventDates(newEvent);
                 const events = [newEvent, ...this.state.events];
                 this.setState({ loading: false, events, showEventPage: newEvent});
 
@@ -136,6 +140,7 @@ class App extends Component {
         setTimeout(async ()=>{
             try {
                 const updatedEvent = await attendEvent(eventId, this.state.provider, this.state.token);
+                setupEventDates(updatedEvent);
                 const events = this.state.events.map(event=>{
                     if (event.id === updatedEvent.id){
                         return updatedEvent;
@@ -156,6 +161,7 @@ class App extends Component {
         setTimeout(async ()=>{
             try {
                 const updatedEvent = await unattendEvent(eventId, this.state.provider, this.state.token);
+                setupEventDates(updatedEvent);
                 const events = this.state.events.map(event=>{
                     if (event.id === updatedEvent.id){
                         return updatedEvent;
@@ -177,6 +183,7 @@ class App extends Component {
         setTimeout(async ()=>{
             try {
                 const updatedEvent = await updateEvent(event, this.state.provider, this.state.token);
+                setupEventDates(updatedEvent);
                 const events = this.state.events.map(event=>{
                     if (event.id === updatedEvent.id){
                         return updatedEvent;

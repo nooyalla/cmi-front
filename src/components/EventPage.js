@@ -45,7 +45,11 @@ class EventPage extends Component {
 
 
     attendOrUnattend = (attending, eventId)=>{
-
+        if (attending){
+            return this.props.unattend(eventId)
+        }else{
+            return this.props.attend(eventId)
+        }
     }
     getHeader = ()=>{
         return  <div id="app-header">
@@ -56,6 +60,8 @@ class EventPage extends Component {
     render() {
         const header = this.getHeader();
         const { event, user } = this.props;
+        console.log(' event.participants', event.participants);
+        console.log(' user', user);
         const attending =  event.participants.some(participant => participant.id === user.id);
 
         const eventDay = days[event.startDate.getDay()];
@@ -72,7 +78,7 @@ class EventPage extends Component {
             height:  "55vh",
 
         };
-        const creatorImage = event.participants[0].imageUrl;
+        const creatorImage =  (event.participants[0] || {}).imageUrl;
         const totalParticipants = event.participants.length;
         const participants = event.participants.slice(0,4).map((participant,index)=>{
             return <img className={`event-participantImage event-participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
