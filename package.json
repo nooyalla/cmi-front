@@ -18,7 +18,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -fr /Users/giladgreen/dev/temp/cmi-front/build && react-scripts build && rm -fr /Users/giladgreen/dev/temp/cmi/public/* && mv -f /Users/giladgreen/dev/temp/cmi-front/build/* /Users/giladgreen/dev/temp/cmi/public  ",
     "copy": "mv -f /Users/giladgreen/dev/temp/cmi-front/build/static/js/* /Users/giladgreen/dev/temp/cmi-front/public && mv -f /Users/giladgreen/dev/temp/cmi-front/build/static/css/* /Users/giladgreen/dev/temp/cmi-front/public",
     "deploy": "npm run build && node rename && npm run copy",
     "test": "react-scripts test --env=jsdom",

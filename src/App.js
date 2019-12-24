@@ -4,6 +4,8 @@ import createEvent from './actions/createEvent';
 import updateEvent from './actions/updateEvent';
 import deleteEvent from './actions/deleteEvent';
 import getEvent from './actions/getEvent';
+import attendEvent from './actions/attendEvent';
+import unattendEvent from './actions/unattendEvent';
 
 import Login from './components/Login';
 import NewEventForm from './components/NewEventForm';
@@ -12,22 +14,51 @@ import EventPage from './components/EventPage';
 import Loading from './containers/Loading';
 import UserEvents from "./components/UserEvents";
 
-String.prototype.datePickerToDate = function() {
-    const stringValue =  this;//2017-11-23
-    const day = stringValue.substr(8,2);
-    const month = stringValue.substr(5,2);
-    const year = stringValue.substr(0,4);
-    return new Date(year, month-1, day, 12, 0, 0);
-};
 
-Date.prototype.AsDatePicker = function() {
-    return this.toISOString().substr(0,10);
-};
 
 class App extends Component {
 
     constructor() {
         super();
+        // const event = {
+        //         id:'1',
+        //         title:'poker night  ssdf sd',
+        //         description:'poker night ',
+        //         location:'somewhere',
+        //         imageUrl:null,
+        //         startDate: new Date(),
+        //         endDate: new Date(),
+        //         lastConfirmationDate: new Date(2019,11,24,18,0,23),
+        //         minParticipants: 3,
+        //         maxParticipants: 30,
+        //         additionalItems:[],
+        //         participants: [{
+        //             id: 1,
+        //             imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAyuOJTvxfYVFwxKOd-h58A8Oxm1EVSf8OjpkSC3uk'
+        //         }, {
+        //             id: 2,
+        //             imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mA99CsCawUbTeZXQQuDTdQBr3NLRHiHKAwWdT3ifQ'
+        //         }, {
+        //             id: 3,
+        //             imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+        //         } ,{
+        //             id: 4,
+        //             imageUrl: 'https://lh5.googleusercontent.com/-1gIcswW4rwM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3reqOCMS5qJhFQJCA1rGgxaCp1LB4w/photo.jpg'
+        //         }, {
+        //             id: 5,
+        //             imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+        //         } ,{
+        //             id: 6,
+        //             imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+        //         },{
+        //             id: 6,
+        //             imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+        //         },{
+        //             id: 6,
+        //             imageUrl: 'https://lh4.googleusercontent.com/-rPs1rKb7XHg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfnS_ka8BrQ8ZjuxF5fe1fG6P4cEg/photo.jpg'
+        //         }]
+        //     }
+
         this.state = { showCreationForm: false, showEventEditForm:null, loading: false, isAuthenticated: false, user: null, events:null, provider:'', error:null, token:null, showEventPage: null};
     }
 
@@ -65,6 +96,9 @@ class App extends Component {
 
             setTimeout(async ()=>{
                 const event = await getEvent(eventId,  provider, token);
+                event.startDate = new Date(event.startDate);
+                event.endDate = new Date(event.endDate);
+                event.lastConfirmationDate = new Date(event.lastConfirmationDate);
                 this.setState({loading: false, showEventPage: event});
             },0)
         } else{
@@ -76,7 +110,7 @@ class App extends Component {
 
     getHeader = ()=>{
         return  <div id="app-header">
-            <span id="app-header-text">IMIN</span>   <span id="app-header-logout" onClick={this.logout}>logout</span>
+            <span id="app-header-text">IMIN</span>
         </div>
     }
 
@@ -94,6 +128,47 @@ class App extends Component {
             }
         },0)
 
+    };
+
+    attend = (eventId)=>{
+        console.log('app attend, event:', eventId);
+        this.setState({ error:null, loading: true});
+        setTimeout(async ()=>{
+            try {
+                const updatedEvent = await attendEvent(eventId, this.state.provider, this.state.token);
+                const events = this.state.events.map(event=>{
+                    if (event.id === updatedEvent.id){
+                        return updatedEvent;
+                    } else{
+                        return event;
+                    }
+                });
+                this.setState({ loading: false, events, showEventPage: updatedEvent});
+
+            } catch (error) {
+                this.setState({ loading: false, error});
+            }
+        },0)
+    };
+    unattend = (eventId)=>{
+        console.log('app unattend, event:', eventId);
+        this.setState({ error:null, loading: true});
+        setTimeout(async ()=>{
+            try {
+                const updatedEvent = await unattendEvent(eventId, this.state.provider, this.state.token);
+                const events = this.state.events.map(event=>{
+                    if (event.id === updatedEvent.id){
+                        return updatedEvent;
+                    } else{
+                        return event;
+                    }
+                });
+                this.setState({ loading: false, events, showEventPage: updatedEvent});
+
+            } catch (error) {
+                this.setState({ loading: false, error});
+            }
+        },0)
     };
 
     update = (event)=>{
@@ -151,7 +226,7 @@ class App extends Component {
         }
 
         if (showEventPage){
-            return <EventPage goHome={this.logout} event={showEventPage}/>
+            return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user} unattend={this.unattend} attend={this.attend}/>
         }
         if (showEventEditForm){
             return  <NewEventForm onCancel={this.onCancel} update={this.update} delete={this.delete} event={showEventEditForm} />;
