@@ -46,9 +46,9 @@ class EventPage extends Component {
 
     attendOrUnattend = (attending, eventId)=>{
         if (attending){
-            return this.props.attend(eventId)
-        }else{
             return this.props.unattend(eventId)
+        }else{
+            return this.props.attend(eventId)
         }
     }
     getHeader = ()=>{
@@ -60,6 +60,8 @@ class EventPage extends Component {
     render() {
         const header = this.getHeader();
         const { event, user } = this.props;
+        console.log(' event.participants', event.participants);
+        console.log(' user', user);
         const attending =  event.participants.some(participant => participant.id === user.id);
 
         const eventDay = days[event.startDate.getDay()];
