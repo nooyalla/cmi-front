@@ -1,6 +1,3 @@
-let URL_PREFIX = `${window.location.origin}/api`;
-if (URL_PREFIX.includes(':3000')){
-    URL_PREFIX= URL_PREFIX.replace(':3000', ':5000')
-}
-console.log('URL_PREFIX',URL_PREFIX);
+const URL_PREFIX = `https://im-in.herokuapp.com/api`;
+
 export default URL_PREFIX;

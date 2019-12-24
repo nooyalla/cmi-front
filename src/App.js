@@ -231,9 +231,9 @@ class App extends Component {
         if (loading){
             return  <Loading/>;
         }
-        // if (!isAuthenticated){
-        //     return  <Login onLogin={this.onLogin} />;
-        // }
+        if (!isAuthenticated){
+            return  <Login onLogin={this.onLogin} />;
+        }
 
         if (showEventPage){
             return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user || {}} unattend={this.unattend} attend={this.attend}/>

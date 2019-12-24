@@ -9,7 +9,7 @@ import Loader from "../containers/Loading";
 import { version } from '../../package.json';
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
-const GOOGLE_CLIENT_ID = "323527955387-rpt6jpjmdeputfkggi5v5gf5cl99ontb.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "323527955387-edumqu3jl0flkpl4vhq0c9gu6i1t9fs7.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "568337437281618";
 class Login extends Component {
 

@@ -10,8 +10,9 @@ import {
 import { Grid, TextField } from '@material-ui/core';
 
 function addHours(date, h) {
+    const hour = typeof h === 'string' ? parseInt(h): h;
     const newDate = new Date(date);
-    newDate.setTime(newDate.getTime() + (h * 60 * 60 * 1000));
+    newDate.setTime(newDate.getTime() + (hour * 60 * 60 * 1000));
     return newDate;
 }
 
@@ -66,9 +67,7 @@ class NewEventForm extends Component {
 
 
     getDateByDateAndTime = (date, hours, minutes) => {
-        const timeString = hours + ':' + minutes + ':00';
-        const dateObj = new Date(date + ' ' + timeString);
-        return dateObj;
+        return new Date(`${date} ${hours}:${minutes}:00`);
     }
 
     publishOrUpdate = () => {
@@ -78,7 +77,7 @@ class NewEventForm extends Component {
             this.state.event.startDate.toISOString().split('T')[0],
             this.state.event.startDateTime.getHours(),
             this.state.event.startDateTime.getMinutes(),
-        )
+        );
 
         const event = {
             title: this.state.event.title,
@@ -88,8 +87,8 @@ class NewEventForm extends Component {
             endDate,
             lastConfirmationDate,
             imageUrl: null,
-            minParticipants: this.state.event.minParticipants,
-            maxParticipants: this.state.event.maxParticipants,
+            minParticipants: parseInt(this.state.event.minParticipants),
+            maxParticipants: parseInt(this.state.event.maxParticipants),
             additionalItems: null
         };
 
