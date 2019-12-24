@@ -45,7 +45,11 @@ class EventPage extends Component {
 
 
     attendOrUnattend = (attending, eventId)=>{
-
+        if (attending){
+            return this.props.attend(eventId)
+        }else{
+            return this.props.unattend(eventId)
+        }
     }
     getHeader = ()=>{
         return  <div id="app-header">
