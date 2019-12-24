@@ -5,7 +5,7 @@ import updateEvent from './actions/updateEvent';
 import deleteEvent from './actions/deleteEvent';
 import getEvent from './actions/getEvent';
 
-//import Login from './components/Login';
+import Login from './components/Login';
 import NewEventForm from './components/NewEventForm';
 import EventPage from './components/EventPage';
 
