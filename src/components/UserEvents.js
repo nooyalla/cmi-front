@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 class UserEvents extends Component {
@@ -77,7 +76,7 @@ class UserEvents extends Component {
 
         const eventsItems = events.map(event => {
             const participants = event.participants.slice(0,4).map((participant,index)=>{
-                return <img className={`participantImage participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
+                return <img alt='participant' className={`participantImage participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
             });
             const style = {
                 backgroundImage: `url(${event.imageUrl || this.getImage()})`,
