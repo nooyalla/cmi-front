@@ -15,7 +15,7 @@ async function unattendEvent(eventId, provider, token){
                 "Content-Type":'application/json'
             }
         };
-        console.log('unattendEvent',options)
+        console.log('unattendEvent',options.method, options.url, options.body);
         request(options, (error, response, body) =>{
             if (error || response.statusCode>=400){
                 if (error){

@@ -13,6 +13,7 @@ async function getEvent(eventId, provider, token){
                 "Content-Type":'application/json'
             }
         };
+        console.log('getEvent',options.method, options.url, options.body);
 
         request(options, (error, response, body) =>{
             if (error || response.statusCode>=400){

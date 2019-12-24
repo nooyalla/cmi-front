@@ -15,7 +15,7 @@ async function createEvent(event, provider, token){
                 "Content-Type":'application/json'
             }
         };
-        console.log('createEvent',options)
+        console.log('createEvent',options.method, options.url, options.body);
         request(options, (error, response, body) =>{
             if (error || response.statusCode>=400){
                 if (error){

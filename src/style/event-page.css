@@ -21,6 +21,13 @@
     text-shadow: 2px 2px black;
 
 }
+#app-header-edit-link{
+    position: absolute;
+    top:5px;
+    right:10px;
+    color: white;
+    font-size: 0.7em;
+}
 .event-page-description{
     padding-left: -5px;
     font-size: 0.7em;
@@ -106,7 +113,7 @@
 #event-details-div{
     position: absolute;
     left: 20vw;
-    top: 70vh;
+    top: 67vh;
     background: white;
     color:black;
 }
@@ -118,12 +125,14 @@
 }
 #event-approve-button-div{
 
+}
 
-
+#combo{
+    color: black;
 }
 .approve-button{
     position: absolute;
-    top: 15vh;
+    top: 21vh;
     left: 0vw;
 
     width: 80vw;

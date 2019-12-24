@@ -25,7 +25,6 @@ class Login extends Component {
 
     performLogin = async (provider, token, showError = true) => {
         try{
-            console.log(provider, token);
             const result = await login(provider, token);
             const authData = localStorage.getItem('authData');
             const issueDate  = authData ? JSON.parse(authData).issueDate : new Date();
@@ -45,7 +44,6 @@ class Login extends Component {
 
     facebookResponse = (response) => {
         if (response.accessToken){
-            console.log('token:',response.accessToken)
             this.performLogin('facebook', response.accessToken, true);
         }else{
             this.onFailure('login failed')

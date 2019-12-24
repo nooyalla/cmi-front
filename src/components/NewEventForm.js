@@ -10,7 +10,7 @@ import {
 import { Grid, TextField } from '@material-ui/core';
 
 function addHours(date, h) {
-    const hour = typeof h === 'string' ? parseInt(h): h;
+    const hour = typeof h === 'string' ? parseInt(h,10): h;
     const newDate = new Date(date);
     newDate.setTime(newDate.getTime() + (hour * 60 * 60 * 1000));
     return newDate;
@@ -25,7 +25,6 @@ class NewEventForm extends Component {
             description: '',
             location: '',
             startDate: new Date(),
-            startDateTime: new Date(),
             endDate: null,
             lastConfirmationDate: null,
             imageUrl: null,
@@ -35,10 +34,14 @@ class NewEventForm extends Component {
 
         };
 
+        event.additionalItems = props.event  && props.event.additionalItems && Array.isArray(props.event.additionalItems) && props.event.additionalItems.length>0 ? props.event.additionalItems.join(',') : '';
+        const duration = props.event && props.event.endDate ?  Math.floor((props.event.endDate.getTime() - props.event.startDate.getTime())/(1000*60*60)) : 4;
+        const startDateTime = props.event ? props.event.startDate : new Date();
         this.state = {
             error: null,
-            duration: 4,
+            duration,
             timer: 2,
+            startDateTime,
             event,
             update: Boolean(event.id)
         };
@@ -49,14 +52,10 @@ class NewEventForm extends Component {
         this.setState({ event });
     };
 
-    handleStartDateChange = (startDate) => {
-        const event = { ...this.state.event, startDate };
-        this.setState({ event });
-    };
+
 
     handleStartDateTimeChange = (startDateTime) => {
-        const event = { ...this.state.event, startDateTime };
-        this.setState({ event });
+        this.setState({ startDateTime });
     };
 
     getHeader = () => {
@@ -75,10 +74,9 @@ class NewEventForm extends Component {
         const lastConfirmationDate = addHours((new Date()), this.state.timer);
         const serializedStartDate = this.getDateByDateAndTime(
             this.state.event.startDate.toISOString().split('T')[0],
-            this.state.event.startDateTime.getHours(),
-            this.state.event.startDateTime.getMinutes(),
+            this.state.startDateTime.getHours(),
+            this.state.startDateTime.getMinutes(),
         );
-
         const event = {
             title: this.state.event.title,
             description: this.state.event.description,
@@ -87,17 +85,15 @@ class NewEventForm extends Component {
             endDate,
             lastConfirmationDate,
             imageUrl: null,
-            minParticipants: parseInt(this.state.event.minParticipants),
-            maxParticipants: parseInt(this.state.event.maxParticipants),
+            minParticipants: parseInt(this.state.event.minParticipants,10),
+            maxParticipants: parseInt(this.state.event.maxParticipants,10),
             additionalItems: this.state.event.additionalItems.split(',')
         };
 
         if (this.state.update){
             event.id = this.state.event.id;
-            console.log('form update, event:', event);
             this.props.update(event);
         } else {
-            console.log('form publish, event:', event);
             this.props.publish(event);
         }
 
@@ -123,7 +119,7 @@ class NewEventForm extends Component {
                         <span className="new-event-form-item-label">Description</span>
                     </div>
                     <div className="row">
-                        <input type="text" placeholder="Enter description" id="newEventTitle" className="formTextInput-full-width" value={this.state.event.description} onChange={(e) => this.handleEventItemChange('description', e.target.value)} />
+                        <input type="text" placeholder="Enter description" id="newEventDescription" className="formTextInput-full-width" value={this.state.event.description} onChange={(e) => this.handleEventItemChange('description', e.target.value)} />
                     </div>
                     <div className="row">
                         <div className="col-xs-5">
@@ -148,10 +144,10 @@ class NewEventForm extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <span className="new-event-form-item-label">Location</span>
+                        <span className="new-event-form-item-label">Location*</span>
                     </div>
                     <div className="row">
-                        <input type="text" placeholder="Enter event location" id="newEventTitle" className="formTextInput-full-width locationInput" value={this.state.event.location} onChange={(e) => this.handleEventItemChange('location', e.target.value)} />
+                        <input type="text" placeholder="Enter event location" id="newEventLocation" className="formTextInput-full-width locationInput" value={this.state.event.location} onChange={(e) => this.handleEventItemChange('location', e.target.value)} />
                     </div>
 
                     <div className="row">
@@ -163,17 +159,17 @@ class NewEventForm extends Component {
                                     label="Date"
                                     format="MM/dd/yyyy"
                                     value={this.state.event.startDate}
-                                    onChange={this.handleStartDateChange}
+                                    onChange={(date) => this.handleEventItemChange('startDate',date)}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
                                     style={{ width: '40%' }}
-                                    a />
+                                     />
                                 <KeyboardTimePicker
                                     margin="normal"
                                     id="time-picker"
                                     label="Time"
-                                    value={this.state.event.startDateTime}
+                                    value={this.state.startDateTime}
                                     onChange={this.handleStartDateTimeChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change time',
@@ -192,10 +188,10 @@ class NewEventForm extends Component {
                         </MuiPickersUtilsProvider>
 
                     </div>
-
+                    {!this.state.update &&
                     <div className="row">
                         <span className="new-event-form-item-label small-top-margin">Timer</span>
-                    </div>
+                    </div>}
                     {!this.state.update && <div className="row">
                         <TextField className="formNumberInput-full-width"
                             id="standard-number"
@@ -205,17 +201,17 @@ class NewEventForm extends Component {
                         />
                     </div>}
 
-                    <div className="row">
-                        <span className="new-event-form-item-label small-top-margin">Additional Items</span>
-                    </div>
-                    <div className="row">
-                        <input type="text" placeholder="items to bring" id="additionalItems" className="formTextInput-full-width" value={this.state.event.additionalItems} onChange={(e) => this.handleEventItemChange('additionalItems', e.target.value)} />
-                    </div>
+                    {/*<div className="row">*/}
+                    {/*    <span className="new-event-form-item-label small-top-margin">Additional Items</span>*/}
+                    {/*</div>*/}
+                    {/*<div className="row">*/}
+                    {/*    <input type="text" placeholder="items to bring" id="additionalItems" className="formTextInput-full-width" value={this.state.event.additionalItems} onChange={(e) => this.handleEventItemChange('additionalItems', e.target.value)} />*/}
+                    {/*</div>*/}
                     <div className="row top-margin">
                         <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
                     </div>
                     {this.state.update ? (<div className="row">
-                        <button className="delete-button" onClick={() => this.props.share(this.state.event.id)} >DELETE</button>
+                        <button className="delete-button" onClick={() => this.props.delete(this.state.event.id)} >DELETE</button>
 
                     </div>) : <div />}
                     {this.state.update ? (<div id="event-link">

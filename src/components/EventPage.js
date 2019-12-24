@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import Dropdown from 'react-dropdown';
 
 
 const SECOND = 1000;
@@ -20,7 +21,7 @@ class EventPage extends Component {
         const days = Math.floor(totalSeconds / DAY);
         let reminder = totalSeconds - days * DAY;
         const hours = Math.floor(reminder / HOUR);
-        reminder = reminder - hours * HOUR;
+        reminder -=  hours * HOUR;
         const minutes =  Math.floor(reminder / MINUTE);
         const seconds = reminder - minutes * MINUTE;
         return {
@@ -34,14 +35,15 @@ class EventPage extends Component {
     constructor(props) {
         super(props);
 
-        const { lastConfirmationDate, startDate, participants, minParticipants } = props.event;
+        const { lastConfirmationDate, startDate, participants, minParticipants, additionalItem } = props.event;
 
         this.lastConfirmationDateOver = lastConfirmationDate < new Date();
         this.gameOn = participants.length >= minParticipants;
         const { days, hours, minutes, seconds } = this.getDateParts(this.lastConfirmationDateOver ?   lastConfirmationDate: startDate);
         this.backgroundImage = `url(${props.event.imageUrl ||  `backgroundImage1.jpg`})`;
+        const selectedItem = additionalItem &&  additionalItem.length >0 ?  additionalItem[0] : null;
         this.state = {
-            days, hours, minutes, seconds
+            days, hours, minutes, seconds, selectedItem
         };
         setInterval(()=>{
             const { days, hours, minutes, seconds } = this.getDateParts(lastConfirmationDate);
@@ -55,8 +57,11 @@ class EventPage extends Component {
         if (attending){
             return this.props.unattend(eventId)
         }else{
-            return this.props.attend(eventId)
+            return this.props.attend(eventId, this.state.selectedItem)
         }
+    }
+    onItemSelected = ({value: selectedItem})=>{
+        this.setState({selectedItem })
     }
     getHeader = ()=>{
         return  <div id="app-header">
@@ -65,8 +70,8 @@ class EventPage extends Component {
     }
 
     render() {
-        const header = this.getHeader();
         const { event, user } = this.props;
+        const header = this.getHeader();
 
         const attending =  event.participants.some(participant => participant.id === user.id);
 
@@ -87,13 +92,19 @@ class EventPage extends Component {
         const creatorImage =  (event.participants[0] || {}).imageUrl;
         const totalParticipants = event.participants.length;
         const participants = event.participants.slice(0,4).map((participant,index)=>{
-            return <img className={`event-participantImage event-participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
+            return <img alt="" className={`event-participantImage event-participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
         });
         if (participants.length < totalParticipants){
             const more = totalParticipants - participants.length;
             participants.push(<div className="more-participants-circle"> +{more}</div>)
         }
 
+
+
+        // const combo = this.lastConfirmationDateOver || !event.additionalItem || event.additionalItems.length === 0 ?   <div/>  : (
+        //     <Dropdown id="combo" options={event.additionalItem} onChange={this.onItemSelected} value={this.state.selectedItem} placeholder="Select an option" />
+        //
+        // )
         return (
             <div id="container">
                 {header}
@@ -108,7 +119,7 @@ class EventPage extends Component {
 
                         </div>
                         <div className="col-xs-3">
-                            <img className="event-image-creator-image" src={creatorImage}/>
+                            <img alt="" className="event-image-creator-image" src={creatorImage}/>
                         </div>
                     </div>
                     <div className="row timer-div">
@@ -145,6 +156,8 @@ class EventPage extends Component {
                     <div id="event-location-text">
                        <LocationOnIcon/> {event.location}
                     </div>
+
+
 
                     { !this.lastConfirmationDateOver ? (<button className="approve-button" onClick={()=>this.attendOrUnattend(attending, event.id)} >{attending ? "I'M OUT": "I'M IN"}</button>) : (
                         <div id="is-game-on-text"  className={this.gameOn ?'game-on':'game-canceled'}>{this.gameOn ? "IT IS ON!" : "NOPE, CANCELED.."} </div>

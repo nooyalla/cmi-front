@@ -94,6 +94,7 @@ class App extends Component {
     };
 
     onLogin = async ({userContext, provider, token, events}) => {
+        events.forEach(setupEventDates);
         const url = new URL(window.location.href);
         const eventId = url.searchParams.get("eventId");
         if (eventId){
@@ -101,7 +102,7 @@ class App extends Component {
 
             setTimeout(async ()=>{
                 const event = await getEvent(eventId,  provider, token);
-                setupEventDates(event)
+                setupEventDates(event);
                 this.setState({loading: false, showEventPage: event});
             },0)
         } else{
@@ -118,7 +119,6 @@ class App extends Component {
     }
 
     publish = (event)=>{
-        console.log('app publish, event:', event)
         this.setState({ showCreationForm: false, error:null, showEventEditForm:null, loading: true});
         setTimeout(async ()=>{
             try {
@@ -136,12 +136,11 @@ class App extends Component {
 
     };
 
-    attend = (eventId)=>{
-        console.log('app attend, event:', eventId);
+    attend = (eventId, selectedItem)=>{
         this.setState({ error:null, loading: true});
         setTimeout(async ()=>{
             try {
-                const updatedEvent = await attendEvent(eventId, this.state.provider, this.state.token);
+                const updatedEvent = await attendEvent(eventId,selectedItem, this.state.provider, this.state.token);
                 setupEventDates(updatedEvent);
                 const events = this.state.events.map(event=>{
                     if (event.id === updatedEvent.id){
@@ -158,7 +157,6 @@ class App extends Component {
         },0)
     };
     unattend = (eventId)=>{
-        console.log('app unattend, event:', eventId);
         this.setState({ error:null, loading: true});
         setTimeout(async ()=>{
             try {
@@ -180,7 +178,6 @@ class App extends Component {
     };
 
     update = (event)=>{
-        console.log('app update, event:', event)
         this.setState({ showCreationForm: false, error:null, showEventEditForm:null, loading: true});
         setTimeout(async ()=>{
             try {
@@ -203,13 +200,10 @@ class App extends Component {
     };
 
     delete = (eventId)=>{
-        console.log('app delete, event:', eventId)
         this.setState({ showCreationForm: false, error:null, showEventEditForm:null, loading: true});
         setTimeout(async ()=>{
             try {
-                console.log('before calling delete')
                 const deletedEventId = await deleteEvent(eventId, this.state.provider, this.state.token);
-                console.log('after calling delete')
                 const events = this.state.events.filter(event=>(event.id !== deletedEventId));
                 this.setState({ loading: false, events});
 
@@ -227,7 +221,6 @@ class App extends Component {
 
     render() {
         const {loading, isAuthenticated, events, showCreationForm, showEventEditForm, showEventPage}  = this.state;
-        console.log('main render loading:',loading,'isAuthenticated', isAuthenticated, 'events', events);
         if (loading){
             return  <Loading/>;
         }
@@ -236,7 +229,7 @@ class App extends Component {
         }
 
         if (showEventPage){
-            return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user || {}} unattend={this.unattend} attend={this.attend}/>
+            return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user || {}} unattend={this.unattend} attend={this.attend} edit={this.editEvent}/>
         }
         if (showEventEditForm){
             return  <NewEventForm onCancel={this.onCancel} update={this.update} delete={this.delete} event={showEventEditForm} />;
@@ -254,7 +247,7 @@ class App extends Component {
                 {header}
                 <div className="MainSection">
 
-                    <UserEvents createEvent={this.createEvent} events={this.state.events} editEvent={this.editEvent}/>
+                    <UserEvents createEvent={this.createEvent} events={events} editEvent={this.editEvent}/>
 
                 </div>
 
