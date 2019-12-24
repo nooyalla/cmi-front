@@ -78,7 +78,7 @@ class EventPage extends Component {
             height:  "55vh",
 
         };
-        const creatorImage = event.participants[0].imageUrl;
+        const creatorImage =  (event.participants[0] || {}).imageUrl;
         const totalParticipants = event.participants.length;
         const participants = event.participants.slice(0,4).map((participant,index)=>{
             return <img className={`event-participantImage event-participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
