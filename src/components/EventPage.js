@@ -30,8 +30,11 @@ class EventPage extends Component {
     constructor(props) {
         super(props);
 
-        const { lastConfirmationDate } = props.event;
-        const { days, hours, minutes, seconds } = this.getDateParts(lastConfirmationDate);
+        const { lastConfirmationDate, startDate, participants, minParticipants } = props.event;
+
+        this.lastConfirmationDateOver = lastConfirmationDate < new Date();
+        this.gameOn = participants.length >= minParticipants;
+        const { days, hours, minutes, seconds } = this.getDateParts(this.lastConfirmationDateOver ?   lastConfirmationDate: startDate);
         this.backgroundImage = `url(${props.event.imageUrl ||  `backgroundImage1.jpg`})`;
         this.state = {
             days, hours, minutes, seconds
@@ -138,8 +141,10 @@ class EventPage extends Component {
                         {event.location}
                     </div>
 
+                    { !this.lastConfirmationDateOver ? (<button className="approve-button" onClick={()=>this.attendOrUnattend(attending, event.id)} >{attending ? "I'M OUT": "I'M IN"}</button>) : (
+                        <div id="is-game-on-text"  className={this.gameOn ?'game-on':'game-canceled'}>{this.gameOn ? "IT IS ON!" : "NOPE, CANCELED.."} </div>
+                    )}
 
-                    <button className="approve-button" onClick={()=>this.attendOrUnattend(attending, event.id)} >{attending ? "I'M OUT": "I'M IN"}</button>
 
 
                 </div>

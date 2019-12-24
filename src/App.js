@@ -33,8 +33,8 @@ class App extends Component {
         //         imageUrl:null,
         //         startDate: new Date(),
         //         endDate: new Date(),
-        //         lastConfirmationDate: new Date(2019,11,24,18,0,23),
-        //         minParticipants: 3,
+        //         lastConfirmationDate: new Date(2019,11,23,18,0,23),
+        //         minParticipants: 2,
         //         maxParticipants: 30,
         //         additionalItems:[],
         //         participants: [{
@@ -233,7 +233,7 @@ class App extends Component {
         }
 
         if (showEventPage){
-            return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user} unattend={this.unattend} attend={this.attend}/>
+            return <EventPage goHome={this.logout} event={showEventPage} user={this.state.user || {}} unattend={this.unattend} attend={this.attend}/>
         }
         if (showEventEditForm){
             return  <NewEventForm onCancel={this.onCancel} update={this.update} delete={this.delete} event={showEventEditForm} />;
