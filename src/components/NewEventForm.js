@@ -68,6 +68,7 @@ class NewEventForm extends Component {
         };
 
         if (this.state.update){
+            event.id = this.state.event.id;
             console.log('form update, event:', event);
             this.props.update(event);
         }else{
