@@ -18,6 +18,14 @@ body {
 #app-header-text{
   padding-left: 8vw;
 }
+#app-header-logout{
+  position: fixed;
+  top:0;
+  right:10px;
+  color: white;
+  padding-top: 20px;
+  font-size: 0.7em;
+}
 .MainSection {
   margin-top: 7vh;
   padding-top: 10px;
@@ -82,6 +90,10 @@ button{
   }
   #app-header-text{
     padding-left: 10vw;
+  }
+  #app-header-logout{
+    padding-top: 5px;
+    font-size: 0.7em;
   }
   .MainSection {
     padding-left: 16px;

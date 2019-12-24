@@ -3,7 +3,7 @@ import URL_PREFIX from '../url';
 
 import request from 'request';
 
-async function deleteEvent(eventId, event, provider, token){
+async function deleteEvent(eventId, provider, token){
     return new Promise((resolve,reject)=>{
         const options = {
             method:'DELETE',
@@ -25,7 +25,7 @@ async function deleteEvent(eventId, event, provider, token){
                     return reject(bodyObj.title);
                 }
             } else{
-                return resolve(JSON.parse(body));
+                return resolve(eventId);
             }
         });
     })

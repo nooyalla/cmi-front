@@ -20,6 +20,15 @@
     height: 60px;
     border-radius: 20px;
 }
+.delete-button{
+    margin-top: 10px;
+    background: black;
+    color: white;
+    width: 80vw;
+    margin-left: 8vw;
+    height: 60px;
+    border-radius: 20px;
+}
 .publish-button:disabled{
     background: #AAAAAA;
     color: #AAAAAA;

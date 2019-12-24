@@ -4,8 +4,10 @@ import FacebookLogin from  'react-facebook-login/dist/facebook-login-render-prop
 import { GoogleLogin } from 'react-google-login';
 
 import login from '../actions/login';
+
 import Loader from "../containers/Loading";
 import { version } from '../../package.json';
+
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const GOOGLE_CLIENT_ID = "323527955387-rpt6jpjmdeputfkggi5v5gf5cl99ontb.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "568337437281618";
@@ -29,6 +31,8 @@ class Login extends Component {
             const issueDate  = authData ? JSON.parse(authData).issueDate : new Date();
             localStorage.setItem('authData', JSON.stringify({provider, token, issueDate }));
             return this.props.onLogin(result);
+
+
         } catch(error) {
             localStorage.removeItem('authData');
             if (showError){

@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.0.5",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "react": "^16.10.2",
@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "copy": "mv -f /Users/giladgreen/dev/temp/cmi-front/build/static/js/* /Users/giladgreen/dev/temp/cmi-front/public && mv -f /Users/giladgreen/dev/temp/cmi-front/build/static/css/* /Users/giladgreen/dev/temp/cmi-front/public",
-    "deploy": "npm run build && node rename && npm run copy && npm run commit-and-push",
+    "deploy": "npm run build && node rename && npm run copy",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "commit-and-push": "git commit -am 'commit' && git push"

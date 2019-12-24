@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 
+function addHours(date, h) {
+    const newDate = new Date(date);
+    newDate.setTime(newDate.getTime() + (h*60*60*1000));
+    return newDate;
+}
+
 class NewEventForm extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const event = props.event || {
+            title :'',
+            description:'',
+            location:'',
+            startDate: new Date(),
+            endDate : null,
+            lastConfirmationDate: null,
+            imageUrl:null,
+            minParticipants: 2,
+            maxParticipants: 8,
+            additionalItems: null,
+
+        };
+
         this.state = {
             error: null,
             duration: 4,
             timer: 2,
-            event: {
-                title :'',
-                description:'',
-                location:'',
-                startDate: new Date(),
-                endDate : null,
-                lastConfirmationDate: null,
-                imageUrl:null,
-                minParticipants: 2,
-                maxParticipants: 8,
-                additionalItems: null,
-
-            } };
+            event,
+            update: Boolean(event.id)
+        };
     }
 
     handleEventItemChange = (attributeName, newValue) =>{
@@ -39,10 +49,10 @@ class NewEventForm extends Component {
         </div>
     }
 
-    publish = ()=>{
+    publishOrUpdate = ()=>{
 
-        const endDate = this.state.event.startDate.addHours(this.state.duration);
-        const lastConfirmationDate =(new Date()).addHours(this.state.timer);
+        const endDate = addHours(this.state.event.startDate,this.state.duration);
+        const lastConfirmationDate = addHours((new Date()),this.state.timer);
 
         const event = {
             title :this.state.event.title,
@@ -56,8 +66,15 @@ class NewEventForm extends Component {
             maxParticipants:this.state.event.maxParticipants,
             additionalItems: null
         };
-        console.log('form publish, event:', event)
-        this.props.publish(event);
+
+        if (this.state.update){
+            console.log('form update, event:', event);
+            this.props.update(event);
+        }else{
+            console.log('form publish, event:', event);
+            this.props.publish(event);
+        }
+
     }
 
 
@@ -149,8 +166,12 @@ class NewEventForm extends Component {
                         </div>
                     </div>
                     <div className="row top-margin">
-                        <button className="publish-button" onClick={this.publish} disabled={!forLegal}>PUBLISH</button>
+                        <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' :'PUBLISH'}</button>
                     </div>
+                    {this.state.update ? (  <div className="row">
+                        <button className="delete-button" onClick={()=>this.props.delete(this.state.event.id)} disabled={!forLegal}>DELETE</button>
+                    </div>) : <div/>}
+
                 </div>
             </div>
         );
