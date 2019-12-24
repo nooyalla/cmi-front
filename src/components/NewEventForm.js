@@ -155,17 +155,22 @@ class NewEventForm extends Component {
                             <br/><span className="hours-text">hours</span>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-xs-11">
-                            <span className="new-event-form-item-label">Timer</span>
+                    {this.state.update ? <div/> : (
+                        <div className="row">
+                            <div className="col-xs-11">
+                                <span className="new-event-form-item-label">Timer</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xs-11">
-                            <input type="number" min="1" max="48"   className="formNumberInput-small-width" value={this.state.timer} onChange={(e)=>this.setState({timer: e.target.value})}/>
-                            <br/><span className="hours-text">hours</span>
-                        </div>
-                    </div>
+                    )}
+                  {this.state.update ? <div/> : (
+                      <div className="row">
+                          <div className="col-xs-11">
+                              <input type="number" min="1" max="48"   className="formNumberInput-small-width" value={this.state.timer} onChange={(e)=>this.setState({timer: e.target.value})}/>
+                              <br/><span className="hours-text">hours</span>
+                          </div>
+                      </div>
+                    )}
+
                     <div className="row top-margin">
                         <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' :'PUBLISH'}</button>
                     </div>
