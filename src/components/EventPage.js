@@ -100,7 +100,9 @@ class EventPage extends Component {
                 <div id="event-image-title-and-timer" style={style}>
                     <div className="row">
                         <div className="col-xs-8 event-page-title">
-                            {event.title}
+                            <div>{event.title}</div>
+                            <div  className="event-page-description">{event.description}</div>
+
                         </div>
                         <div className="col-xs-1">
 

@@ -16,7 +16,10 @@
     color: white;
 }
 .top-margin{
-    margin-top: 50px;
+    margin-top: 20px;
+}
+.small-top-margin{
+    margin-top: 15px;
 }
 .publish-button{
     background: black;
@@ -54,7 +57,7 @@
 .formTextInput-full-width{
     width: 100%;
     font-size: 1.2em;
-    margin-bottom: 5vh;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid #5a6268;
 }
@@ -84,9 +87,7 @@
     width: 89vw;
     padding-left: 6vw;
 }
-.formNumberInput-full-width::before {
-    content: " - Remember this";
-}
+
 .hours-text{
     color: #5a6268;
     font-size: 0.7em;

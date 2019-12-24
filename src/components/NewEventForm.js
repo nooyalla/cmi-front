@@ -31,7 +31,7 @@ class NewEventForm extends Component {
             imageUrl: null,
             minParticipants: 2,
             maxParticipants: 8,
-            additionalItems: null,
+            additionalItems: '',
 
         };
 
@@ -89,7 +89,7 @@ class NewEventForm extends Component {
             imageUrl: null,
             minParticipants: parseInt(this.state.event.minParticipants),
             maxParticipants: parseInt(this.state.event.maxParticipants),
-            additionalItems: null
+            additionalItems: this.state.event.additionalItems.split(',')
         };
 
         if (this.state.update){
@@ -192,15 +192,25 @@ class NewEventForm extends Component {
                         </MuiPickersUtilsProvider>
 
                     </div>
+
+                    <div className="row">
+                        <span className="new-event-form-item-label small-top-margin">Timer</span>
+                    </div>
                     {!this.state.update && <div className="row">
-                        <TextField
+                        <TextField className="formNumberInput-full-width"
                             id="standard-number"
-                            label="Timer"
                             type="number"
                             value={this.state.timer}
                             onChange={(e) => this.setState({ timer: e.target.value })}
                         />
                     </div>}
+
+                    <div className="row">
+                        <span className="new-event-form-item-label small-top-margin">Additional Items</span>
+                    </div>
+                    <div className="row">
+                        <input type="text" placeholder="items to bring" id="additionalItems" className="formTextInput-full-width" value={this.state.event.additionalItems} onChange={(e) => this.handleEventItemChange('additionalItems', e.target.value)} />
+                    </div>
                     <div className="row top-margin">
                         <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
                     </div>
