@@ -84,6 +84,7 @@ class Login extends Component {
         />);
 
          const facebook = ( <FacebookLogin
+            disableMobileRedirect={true}
             appId={FACEBOOK_APP_ID}
             autoLoad={false}
             fields="name,email,picture"
