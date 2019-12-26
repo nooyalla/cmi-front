@@ -14,6 +14,7 @@ body {
   background: black;
   color: white;
   font-size: 4em;
+  border-bottom: 2px solid #333333;
 }
 #app-header-text{
   padding-left: 8vw;
@@ -86,7 +87,7 @@ button{
   #app-header{
     width: 100vw;
     height: 7vh;
-    font-size: 2em;
+    font-size: 1.9em;
   }
   #app-header-text{
     padding-left: 10vw;
@@ -103,7 +104,7 @@ button{
     font-size: 1.5em;
   }
   #user-events{
-margin-left:-20px;
+    margin-left:-20px;
   }
   .event-item-div{
     -webkit-box-shadow: -4px 3px 9px 2px rgba(0,0,0,0.31);
@@ -114,7 +115,7 @@ margin-left:-20px;
     height: 40vw;
     margin: 2.9vw;
 
-
+    text-shadow: 2px 2px black;
   }
   .participantsImagesDiv{
 

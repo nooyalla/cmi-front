@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
+import TagsInput from 'react-tagsinput'
 
 import {
     MuiPickersUtilsProvider,
@@ -31,27 +32,35 @@ class NewEventForm extends Component {
             minParticipants: 2,
             maxParticipants: 8,
             additionalItems: '',
-
         };
 
-       // event.additionalItems = props.event  && props.event.additionalItems && Array.isArray(props.event.additionalItems) && props.event.additionalItems.length>0 ? props.event.additionalItems.join(',') : '';
         const duration = props.event && props.event.endDate ?  Math.floor((props.event.endDate.getTime() - props.event.startDate.getTime())/(1000*60*60)) : 4;
-        const startDateTime = props.event ? props.event.startDate : new Date();
+
+        const additionalItems = !event.additionalItems || event.additionalItems.length === 0 ? [] : event.additionalItems.split('|');
         this.state = {
+            additionalItems,
             error: null,
             duration,
             timer: 2,
-            startDateTime,
+            startDateTime:  event.startDate,
             event,
             update: Boolean(event.id)
         };
     }
 
+
+
+    handleAdditionalItemChange = (additionalItems) => {
+
+        this.setState({ additionalItems });
+    }
+
+
+
     handleEventItemChange = (attributeName, newValue) => {
         const event = { ...this.state.event, [attributeName]: newValue };
         this.setState({ event });
     };
-
 
 
     handleStartDateTimeChange = (startDateTime) => {
@@ -60,34 +69,37 @@ class NewEventForm extends Component {
 
     getHeader = () => {
         return <div id="app-header">
-            <span id="app-header-text">IMIN</span>
+            <span id="app-header-text">ImIN</span><span id="event-page-edit-link" onClick={this.props.onCancel}>cancel</span>
         </div>
     };
 
 
-    getDateByDateAndTime = (date, hours, minutes) => {
-        return new Date(`${date} ${hours}:${minutes}:00`);
-    };
-
     publishOrUpdate = () => {
         const endDate = addHours(this.state.event.startDate, this.state.duration);
         const lastConfirmationDate = addHours((new Date()), this.state.timer);
-        const serializedStartDate = this.getDateByDateAndTime(
-            this.state.event.startDate.toISOString().split('T')[0],
-            this.state.startDateTime.getHours(),
-            this.state.startDateTime.getMinutes(),
-        );
+        const sd = this.state.event.startDate;
+        const iso = sd.toISOString();
+        const date = iso.split('T')[0];
+
+        const year = parseInt(date.substring(0,4),10);
+        const month = parseInt(date.substring(5,2),10) - 1;
+        const day = parseInt(date.substring(8,2),10);
+        const hours = parseInt(`${sd.getHours()}`,10);
+        const minutes = parseInt(`${sd.getMinutes()}`,10);
+   
+        const startDate = new Date(year,month,day,hours,minutes,0);
+
         const event = {
+            startDateBrakeDown : ` year:${year}  month:${month}  day:${day}  hours:${hours}  minutes:${minutes}   startDate:${startDate}`,
             title: this.state.event.title,
             description: this.state.event.description,
             location: this.state.event.location,
-            startDate: serializedStartDate,
+            startDate,
             endDate,
             lastConfirmationDate,
-            imageUrl: null,
             minParticipants: parseInt(this.state.event.minParticipants,10),
             maxParticipants: parseInt(this.state.event.maxParticipants,10),
-            additionalItems: this.state.event.additionalItems.split(',')
+            additionalItems: this.state.additionalItems.length ===0 ? '' : this.state.additionalItems.join('|'),
         };
 
         if (this.state.update){
@@ -102,8 +114,7 @@ class NewEventForm extends Component {
 
     render() {
         const header = this.getHeader();
-
-        const forLegal = this.state.event.title.length > 0 &&
+        const formLegal = this.state.event.title.length > 0 &&
                          this.state.event.location.length > 0 &&
                          this.state.event.startDate &&
                          this.state.event.minParticipants <= this.state.event.maxParticipants;
@@ -166,7 +177,7 @@ class NewEventForm extends Component {
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
-                                    style={{ width: '40%' }}
+                                    style={{ width: '42%' }}
                                      />
                                 <KeyboardTimePicker
                                     margin="normal"
@@ -177,7 +188,7 @@ class NewEventForm extends Component {
                                     KeyboardButtonProps={{
                                         'aria-label': 'change time',
                                     }}
-                                    style={{ width: '40%' }}
+                                    style={{ width: '38%' }}
                                 />
                                 <TextField
                                     id="standard-number"
@@ -204,14 +215,16 @@ class NewEventForm extends Component {
                         />
                     </div>}
 
-                    {/*<div className="row">*/}
-                    {/*    <span className="new-event-form-item-label small-top-margin">Additional Items</span>*/}
-                    {/*</div>*/}
-                    {/*<div className="row">*/}
-                    {/*    <input type="text" placeholder="items to bring" id="additionalItems" className="formTextInput-full-width" value={this.state.event.additionalItems} onChange={(e) => this.handleEventItemChange('additionalItems', e.target.value)} />*/}
-                    {/*</div>*/}
+                    <div className="row">
+                        <span className="new-event-form-item-label small-top-margin">Additional Items</span>
+                    </div>
+                    <div className="row">
+                        <TagsInput placeholder="Add items"
+                            value={this.state.additionalItems}
+                            onChange={this.handleAdditionalItemChange} />
+                    </div>
                     <div className="row top-margin">
-                        <button className="publish-button" onClick={this.publishOrUpdate} disabled={!forLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
+                        <button className="publish-button" onClick={this.publishOrUpdate} disabled={!formLegal}>{this.state.update ? 'UPDATE' : 'PUBLISH'}</button>
                     </div>
                     {this.state.update ? (<div className="row">
                         <button className="delete-button" onClick={() => this.props.delete(this.state.event.id)} >DELETE</button>

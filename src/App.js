@@ -19,6 +19,10 @@ function setupEventDates(event){
     event.startDate = new Date(event.startDate);
     event.endDate = new Date(event.endDate);
     event.lastConfirmationDate = new Date(event.lastConfirmationDate);
+    event.participants.forEach(participant=>{
+        participant.confirmationDate = new Date( participant.confirmationDate);
+    });
+    event.participants.sort((a,b)=> a.confirmationDate < b.confirmationDate ? -1 : 1);
     return event;
 }
 class App extends Component {
@@ -36,7 +40,7 @@ class App extends Component {
         //         lastConfirmationDate: new Date(2019,11,23,18,0,23),
         //         minParticipants: 2,
         //         maxParticipants: 30,
-        //         additionalItems:[],
+        //         additionalItems:'apple|orange|banana',
         //         participants: [{
         //             id: 1,
         //             imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAyuOJTvxfYVFwxKOd-h58A8Oxm1EVSf8OjpkSC3uk'
@@ -81,7 +85,7 @@ class App extends Component {
 
 
     onCancel = () => {
-        this.setState({ showCreationForm: false, error:null, showEventEditForm:null})
+        this.setState({ showCreationForm: false, error:null, showEventEditForm:null, showEventPage:null})
     };
 
     onFailure = (error) => {
@@ -114,7 +118,7 @@ class App extends Component {
 
     getHeader = ()=>{
         return  <div id="app-header">
-            <span id="app-header-text">IMIN</span>
+            <span id="app-header-text">ImIN</span>
         </div>
     }
 
@@ -208,7 +212,7 @@ class App extends Component {
                 this.setState({ loading: false, events});
 
             } catch (error) {
-                console.log('error calling delete',error)
+                console.error('error calling delete',error)
                 this.setState({ loading: false, error});
             }
         },0)
@@ -216,7 +220,11 @@ class App extends Component {
     };
 
     editEvent = (event) =>{
-        this.setState({ showEventEditForm: event})
+        this.setState({ showCreationForm: null, showEventEditForm:event, loading: false, showEventPage: null})
+    }
+
+    showEvent = (event) =>{
+        window.location.replace(`https://im-in.herokuapp.com?eventId=${event.id}`);
     }
 
     render() {
@@ -247,7 +255,7 @@ class App extends Component {
                 {header}
                 <div className="MainSection">
 
-                    <UserEvents createEvent={this.createEvent} events={events} editEvent={this.editEvent}/>
+                    <UserEvents createEvent={this.createEvent} events={events} showEvent={this.showEvent}/>
 
                 </div>
 

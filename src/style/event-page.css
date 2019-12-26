@@ -10,7 +10,7 @@
 }
 #event-image-title-and-timer{
     position: absolute;
-    margin-top: 6vh;
+    margin-top: 7vh;
     padding-top: 20px;
 }
 
@@ -46,8 +46,8 @@
 
 }
 .timer-div{
-    padding-top: 9vh;
-    padding-left: 2vh;
+    padding-top: 7vh;
+    padding-left: 0.5vh;
     text-align: center;
     color: white;
     text-shadow: 2px 2px black;
@@ -69,7 +69,7 @@
 #event-participants{
 
     position: absolute;
-    top: 50vh;
+    top: 47vh;
     left:0vw;
     width: 100vw;
     height: 70px;
@@ -132,7 +132,7 @@
 }
 .approve-button{
     position: absolute;
-    top: 21vh;
+    top: 20vh;
     left: 0vw;
 
     width: 80vw;
@@ -169,4 +169,50 @@
     background: darkred;
     font-size: 1.6em;
 }
+#event-all-participants{
+    margin-top: 130px;
+    margin-left: -30px;
+}
+.event-page-all-participant-item{
+    margin: 5px;
+    padding: 5px;
+    margin-left: -20px;
+}
 
+.event-page-all-participant-item-image{
+   width: 45px;
+   height: 45px;
+    border-radius: 50%;
+}
+.event-page-all-participant-item-name{
+    font-size: 1.3em;
+    padding-left: 10px;
+}
+#event-page-edit-link{
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    font-size: 0.8em;
+}
+#event-dropdown-div{
+    margin-top: 10px;
+}
+#Dropdown{
+
+    border: 1px solid #333333;
+    border-radius: 6px;
+    background: black;
+    color: white;
+    width: 130px;
+
+}
+select{
+    padding-left: 10px;
+}
+.line{
+    width:80vw;
+
+}
+.participant-additional-item{
+    font-size: 0.7em;
+}

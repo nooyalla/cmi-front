@@ -6,7 +6,7 @@ export default class Loader extends Component {
         return  (
             <div id="loader">
                 <div id="loader-app-name"><b>
-                    IM<span className="loading-name-space">_</span>IN
+                    ImIN
                 </b></div>
                 <img id="loaderImage"  src="loading.gif" alt='loading'/>
 

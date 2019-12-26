@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import Dropdown from 'react-dropdown';
-
+import AppsIcon from '@material-ui/icons/Apps';
 
 const SECOND = 1000;
 const MINUTE = 60;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 class EventPage extends Component {
 
     getDateParts(date){
@@ -24,6 +22,7 @@ class EventPage extends Component {
         reminder -=  hours * HOUR;
         const minutes =  Math.floor(reminder / MINUTE);
         const seconds = reminder - minutes * MINUTE;
+
         return {
             days: days>9 ? `${days}` : `0${days}`,
             hours:hours>9 ? `${hours}` : `0${hours}`,
@@ -35,18 +34,33 @@ class EventPage extends Component {
     constructor(props) {
         super(props);
 
-        const { lastConfirmationDate, startDate, participants, minParticipants, additionalItem } = props.event;
+        const { lastConfirmationDate, startDate, participants, minParticipants, additionalItems } = props.event;
 
         this.lastConfirmationDateOver = lastConfirmationDate < new Date();
         this.gameOn = participants.length >= minParticipants;
-        const { days, hours, minutes, seconds } = this.getDateParts(this.lastConfirmationDateOver ?   lastConfirmationDate: startDate);
+        const { days, hours, minutes, seconds } = this.getDateParts(!this.lastConfirmationDateOver ?   lastConfirmationDate: startDate);
         this.backgroundImage = `url(${props.event.imageUrl ||  `backgroundImage1.jpg`})`;
-        const selectedItem = additionalItem &&  additionalItem.length >0 ?  additionalItem[0] : null;
+        let selectedItem=null;
+        if (additionalItems.length>0) {
+            const allItems = additionalItems.split('|');
+            participants.forEach(({additionalItem}) => {
+                const index = allItems.findIndex((item => item === additionalItem));
+                if (index >= 0) {
+                    allItems.splice(index, 1);
+                }
+            });
+
+            if (allItems.length > 0) {
+                this.allItems = allItems;
+                selectedItem = allItems[0];
+            }
+        }
+
         this.state = {
             days, hours, minutes, seconds, selectedItem
         };
         setInterval(()=>{
-            const { days, hours, minutes, seconds } = this.getDateParts(lastConfirmationDate);
+            const { days, hours, minutes, seconds } = this.getDateParts(!this.lastConfirmationDateOver ?   lastConfirmationDate: startDate);
             this.setState({days, hours, minutes, seconds})
         },1000)
     }
@@ -64,8 +78,14 @@ class EventPage extends Component {
         this.setState({selectedItem })
     }
     getHeader = ()=>{
+        const { event, user } = this.props;
+        const isCreator = event.creatorId === user.id;
         return  <div id="app-header">
-            <span id="app-header-text">IMIN</span>
+            <span id="app-header-text">ImIN</span>
+            {
+                isCreator ? <span id="event-page-edit-link" onClick={()=>this.props.edit(event)}>edit</span> : <span/>
+            }
+
         </div>
     }
 
@@ -73,23 +93,26 @@ class EventPage extends Component {
         const { event, user } = this.props;
         const header = this.getHeader();
 
-        const attending =  event.participants.some(participant => participant.id === user.id);
+        const attending = event.participants.some(participant => participant.id === user.id);
 
         const eventDay = days[event.startDate.getDay()];
-
 
         const eventDate = `${event.startDate.getDate()}/${event.startDate.getMonth() +1}/${event.startDate.getFullYear()}`;
 
         const style = {
+            background: "black",
+            backgroundColor: "black",
             backgroundImage: this.backgroundImage,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: "5px",
             width:   "100vw" ,
-            height:  "55vh",
+            height:  "52vh",
 
         };
-        const creatorImage =  (event.participants[0] || {}).imageUrl;
+
+        const creator = event.participants.find(participant => participant.id === event.creatorId);
+        const creatorImage = creator ? creator.imageUrl : null;
         const totalParticipants = event.participants.length;
         const participants = event.participants.slice(0,4).map((participant,index)=>{
             return <img alt="" className={`event-participantImage event-participantImage${index+1}`} src={participant.imageUrl} key={`event${event.id}_participant${participant.id}`}/>
@@ -98,13 +121,38 @@ class EventPage extends Component {
             const more = totalParticipants - participants.length;
             participants.push(<div className="more-participants-circle"> +{more}</div>)
         }
+        const maxParticipants = event.maxParticipants;
+        const allParticipants = event.participants.map((participant,index)=>{
+            return (<div className="event-page-all-participant-item row" key={`event${event.id}_all_participant${participant.id}`}>
+                {index === maxParticipants && (
+                    <div className="col-xs-12 line" >
+                        <u>standby</u>
+                    </div>
+                )}
+                <div className="col-xs-4" >
+                    <img alt="" className="event-page-all-participant-item-image" src={participant.imageUrl} />
+                </div>
+                <div className="col-xs-7 event-page-all-participant-item-name" >
+                    {participant.firstName} {participant.familyName} <span className="participant-additional-item" >{participant.additionalItem && participant.additionalItem.length>0 ? ` (${participant.additionalItem})`:''}</span>
+                </div>
+
+            </div>)
+        });
+
+        const showDropbox =  this.allItems && !attending;
+
+        const dropdown = !showDropbox ? <span/> : (
+                <select id="Dropdown" value={this.state.selectedItem}
+                        onChange={(e) => this.setState({selectedItem: e.target.value})}>
+
+                    {this.allItems.map((item,index)=>{
+                        return  <option key={`${item}_${index}`} value={item}>{item}</option>
+                    })}
+                </select>
+            )
 
 
 
-        // const combo = this.lastConfirmationDateOver || !event.additionalItem || event.additionalItems.length === 0 ?   <div/>  : (
-        //     <Dropdown id="combo" options={event.additionalItem} onChange={this.onItemSelected} value={this.state.selectedItem} placeholder="Select an option" />
-        //
-        // )
         return (
             <div id="container">
                 {header}
@@ -119,7 +167,7 @@ class EventPage extends Component {
 
                         </div>
                         <div className="col-xs-3">
-                            <img alt="" className="event-image-creator-image" src={creatorImage}/>
+                            { creatorImage &&  <img alt="" className="event-image-creator-image" src={creatorImage}/> }
                         </div>
                     </div>
                     <div className="row timer-div">
@@ -156,13 +204,20 @@ class EventPage extends Component {
                     <div id="event-location-text">
                        <LocationOnIcon/> {event.location}
                     </div>
-
-
+                    { showDropbox &&
+                        <div id="event-dropdown-div">
+                            <AppsIcon/> select one: {dropdown}
+                        </div>
+                    }
 
                     { !this.lastConfirmationDateOver ? (<button className="approve-button" onClick={()=>this.attendOrUnattend(attending, event.id)} >{attending ? "I'M OUT": "I'M IN"}</button>) : (
                         <div id="is-game-on-text"  className={this.gameOn ?'game-on':'game-canceled'}>{this.gameOn ? "IT IS ON!" : "NOPE, CANCELED.."} </div>
                     )}
 
+                    <div id="event-all-participants">
+                        <u>participants:</u><br/>
+                        {allParticipants}
+                    </div>
 
 
                 </div>

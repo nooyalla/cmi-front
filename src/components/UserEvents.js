@@ -30,7 +30,7 @@ class UserEvents extends Component {
       //       endDate: new Date(),
       //       minParticipants: 3,
       //       maxParticipants: 30,
-      //       additionalItems:[],
+      //       additionalItems:'orange|red|blue',
       //       participants: [{
       //           id: 1,
       //           imageUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAyuOJTvxfYVFwxKOd-h58A8Oxm1EVSf8OjpkSC3uk'
@@ -60,7 +60,7 @@ class UserEvents extends Component {
       //       endDate: new Date(),
       //       minParticipants: 3,
       //       maxParticipants: 30,
-      //       additionalItems:[],
+      //       additionalItems:'',
       //       participants: [{
       //           id: 1,
       //           imageUrl: 'https://lh6.googleusercontent.com/-ytRjEMsP4z4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3relWuDYAvQHC7SzvBmNhAdHzjGNTQ/photo.jpg'
@@ -88,9 +88,12 @@ class UserEvents extends Component {
                 height:  "25vw",
 
             };
-            return (<div key={event.id} className="event-item-div"  onClick={()=>this.props.editEvent(event)}>
+            return (<div key={event.id} className="event-item-div"  onClick={()=>this.props.showEvent(event)}>
                 <div key={event.id}  style={style}>
-                    <b>{event.title }</b>
+                    <div><b>{event.title }</b></div>
+                    <div>{event.description }</div>
+
+
                 </div>
                 <div className="participantsImagesDiv">
                     {participants}

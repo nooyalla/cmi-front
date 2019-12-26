@@ -98,7 +98,7 @@ class Login extends Component {
                 <img id="rect-img" src="rect.png" alt='rect'/>
                 <img id="hand-img" src="hand.png" alt='hand'/>
                 <div id="login-space1"/>
-                <span className="login-app-name">IM</span> <span className="login-app-name-space"> _</span><span className="login-app-name">IN</span>
+                <span className="login-app-name">ImIn</span>
                 <div id="login-space2"/>
                 {facebook}
                 {google}
